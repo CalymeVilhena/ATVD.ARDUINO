@@ -1,0 +1,41 @@
+int led1 = 13;
+int led2 = 12;
+int botao1 = 3;
+int botao2 = 2;
+
+int cont = 0;
+
+long tempoAnterior = 0;
+long debounce = 400; //o botao é apertado aguarda alguns milisegundos verifica o sinal mais estavel e retorna ele como unico verdadeiro 
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(botao1, INPUT_PULLUP);
+  pinMode(botao2, INPUT_PULLUP);
+}
+
+void loop()
+{
+  if(millis() - tempoAnterior > debounce)
+  {
+    if(digitalRead(botao1) == LOW){
+      
+      digitalWrite(led1, HIGH);
+      digitalWrite(led2, HIGH);
+      cont++;
+      tempoAnterior = millis();
+    }
+
+    if(digitalRead(botao2) == LOW){
+      
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW);
+      cont++;
+      tempoAnterior = millis();
+    }
+  }
+
+  Serial.println(cont);
+}
